@@ -12,10 +12,12 @@
 NGINX_VERSION=${NGINX_VERSION-1.11.3}
 PCRE_VERSION=${PCRE_VERSION-8.39}
 ZLIB_VERSION=${ZLIB_VERSION-1.2.8}
+OPENSSL_VERSION=${OPENSSL_VERSION-1.1.0e}
 
 nginx_tarball_url=http://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz
 pcre_tarball_url=ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-${PCRE_VERSION}.tar.gz
 zlib_url=http://zlib.net/zlib-${ZLIB_VERSION}.tar.gz
+openssl_url=https://www.openssl.org/source/openssl-${OPENSSL_VERSION}.tar.gz
 
 temp_dir=$(mktemp -d /tmp/nginx.XXXXXXXXXX)
 
@@ -35,6 +37,9 @@ echo "Downloading $pcre_tarball_url"
 echo "Downloading $zlib_url"
 (cd nginx-${NGINX_VERSION} && curl -L $zlib_url | tar xvz )
 
+echo "Downloading $openssl_url"
+(cd nginx-${NGINX_VERSION} && curl -L $openssl_url | tar xvz )
+
 (
   cd nginx-${NGINX_VERSION}
   ./configure \
@@ -42,6 +47,7 @@ echo "Downloading $zlib_url"
     --with-zlib=zlib-${ZLIB_VERSION} \
     --prefix=/tmp/nginx \
     --with-http_gzip_static_module \
+    --with-http_ssl_module \
     --with-cc-opt='-g -O2 -fstack-protector --param=ssp-buffer-size=4 -Wformat -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2' \
     --with-ld-opt='-Wl,-Bsymbolic-functions -Wl,-z,relro -Wl,--as-needed'
 
