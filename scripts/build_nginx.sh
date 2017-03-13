@@ -11,13 +11,13 @@
 
 NGINX_VERSION=${NGINX_VERSION-1.11.3}
 PCRE_VERSION=${PCRE_VERSION-8.39}
-ZLIB_VERSION=${ZLIB_VERSION-1.2.8}
+ZLIB_VERSION=${ZLIB_VERSION-1.2.11}
 OPENSSL_VERSION=${OPENSSL_VERSION-1.1.0e}
 
-nginx_tarball_url=http://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz
-pcre_tarball_url=ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-${PCRE_VERSION}.tar.gz
-zlib_url=http://zlib.net/zlib-${ZLIB_VERSION}.tar.gz
-openssl_url=https://www.openssl.org/source/openssl-${OPENSSL_VERSION}.tar.gz
+nginx_tarball_url=http://nginx.org/download/nginx-1.11.3.tar.gz
+pcre_tarball_url=ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-8.39.tar.gz
+zlib_url=http://zlib.net/zlib-1.2.11.tar.gz
+openssl_url=https://www.openssl.org/source/openssl-1.1.0e.tar.gz
 
 temp_dir=$(mktemp -d /tmp/nginx.XXXXXXXXXX)
 
@@ -43,8 +43,8 @@ echo "Downloading $openssl_url"
 (
   cd nginx-${NGINX_VERSION}
   ./configure \
-    --with-pcre=pcre-${PCRE_VERSION} \
-    --with-zlib=zlib-${ZLIB_VERSION} \
+    --with-pcre=pcre-8.39 \
+    --with-zlib=zlib-1.2.11 \
     --prefix=/tmp/nginx \
     --with-http_gzip_static_module \
     --with-http_ssl_module \
